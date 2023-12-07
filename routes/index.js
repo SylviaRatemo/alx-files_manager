@@ -1,12 +1,20 @@
-// routes/index.js
-const express = require('express');
+import express from 'express';
+import AppController from '../controllers/AppController';
+import UsersController from '../controllers/UsersController';
 
-const router = express.Router();
-const AppController = require('../controllers/AppController');
-const UsersController = require('../controllers/UsersController');
+export default function Routes(app) {
+  const router = express.Router();
+  app.use('/', router);
 
-router.get('/status', AppController.getStatus);
-router.get('/stats', AppController.getStats);
-router.post('/users', UsersController.postNew);
+  router.get('/status', (req, res) => {
+    AppController.getStatus(req, res);
+  });
 
-module.exports = router;
+  router.get('/stats', (req, res) => {
+    AppController.getStats(req, res);
+  });
+
+  router.post('/users', (req, res) => {
+    UsersController.postNew(req, res);
+  });
+}
